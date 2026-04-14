@@ -36,11 +36,11 @@ class PremiumUser(User):
 class FamilyAccountUser(User):
     def __init__(self,user_id:str,name:str,age:int):
         super().__init__(user_id,name,age)
-        self.sub_user=[]
+        self.sub_users=[]
     def add_sub_user(self,sub_user):
-        self.sub_user.append(sub_user)
+        self.sub_users.append(sub_user)
     def all_members(self):
-        return [self]+self.sub_user
+        return [self]+self.sub_users
     
 class FamilyMember(User):
     def __init__(self,user_id:str,name:str,age:int,parent:str):
