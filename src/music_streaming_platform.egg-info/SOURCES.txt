@@ -1,0 +1,16 @@
+README.md
+pyproject.toml
+src/music_streaming_platform.egg-info/PKG-INFO
+src/music_streaming_platform.egg-info/SOURCES.txt
+src/music_streaming_platform.egg-info/dependency_links.txt
+src/music_streaming_platform.egg-info/requires.txt
+src/music_streaming_platform.egg-info/top_level.txt
+src/streaming/__init__.py
+src/streaming/albums.py
+src/streaming/artists.py
+src/streaming/platform.py
+src/streaming/playlists.py
+src/streaming/sessions.py
+src/streaming/tracks.py
+src/streaming/users.py
+tests/test_public.py
