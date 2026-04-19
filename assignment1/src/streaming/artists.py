@@ -12,7 +12,9 @@ class Artist:
         self.name=name
         self.genre=genre
         self.tracks=[]
+    
     def add_track(self,track):
         self.tracks.append(track)
+    
     def track_count(self):
         return len(self.tracks)

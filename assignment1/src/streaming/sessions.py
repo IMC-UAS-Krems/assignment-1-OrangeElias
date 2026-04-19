@@ -13,6 +13,7 @@ class ListeningSession:
         self.track=track
         self.timestamp=daytime
         self.duration_listened_seconds=duration_listened_seconds
+    
     def duration_listened_minutes(self):
         return int(self.duration_listened_seconds)/60
     
