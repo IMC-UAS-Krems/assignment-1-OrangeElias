@@ -13,11 +13,9 @@ from streaming.users import PremiumUser, FamilyAccountUser, FamilyMember
 
 
 from datetime import datetime, timedelta
-from typing import TYPE_CHECKING
 from .users import PremiumUser
-from statistics import mean
 from datetime import datetime, timezone, timedelta
-from itertools import groupby, islice
+
 
 class StreamingPlatform:
    def __init__(self,name:str):
@@ -203,42 +201,30 @@ class StreamingPlatform:
       return data
 
    def users_who_completed_albums(self):
-    result = []
-
-      # gehe jeden User durch
-    for user in self._users.values():
-
-         # sammle alle Track-IDs, die der User gehört hat
-         listened_tracks = set()
-      for session in user.sessions:
-               listened_tracks.add(session.track.track_id)
-
-         completed_albums = []
-
-         # gehe alle Alben durch
-         for album in self._albums.values():
-
-               # überspringe leere Alben
-               if len(album.tracks) == 0:
-                  continue
-
-               all_tracks_listened = True
-
-               # prüfe jeden Track im Album
-               for track in album.tracks:
-                  if track.track_id not in listened_tracks:
-                     all_tracks_listened = False
-                     break
-
-               # wenn alle Tracks gehört wurden → Album hinzufügen
-               if all_tracks_listened:
-                  completed_albums.append(album.title)
-
-         # nur User hinzufügen, die mindestens ein Album fertig gehört haben
-         if len(completed_albums) > 0:
-               result.append((user, completed_albums))
+      result = []
+      completed_albums=[]
+      for user in self._users.values(): #loops through all users
+         listened_tracks = set()        #empty set for later
+         for session in user.sessions:  #loop through every session of the user
+            listened_tracks.add(session.track.track_id) #adds the track id of all heard tracks 
+         for album in self._albums.values(): #loops through all of the albums
+            album_tracks=set()               #empty set
+            if not album_tracks:             #checks, if there is even album
+             continue
+            if hasattr(album,'track_ids'):   #checks if the album has track_ids
+               album_tracks.add(album.track_ids)   #adds the track_id of the album to the set
+            else:
+               album_tracks.add(album._tracks)     #adds the track of the album to the set
+         if album_tracks.issubset(listened_tracks):   #compares if the user listened to all tracks of the album
+            completed_albums.append(album.title)      #add completed album to the list of the completed albums
+         if completed_albums:                         #checks if its full
+            result.append((user, completed_albums))   #adds to the result
 
       return result
-        
+
+
+            
+      
+      
            
       
