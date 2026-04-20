@@ -1,0 +1,6 @@
+Metadata-Version: 2.4
+Name: music-streaming-platform
+Version: 0.1.0
+Summary: Programming II assignment - Music Streaming Platform (OOP with Python 3.12)
+Requires-Python: >=3.12
+Requires-Dist: pytest>=8.0
