@@ -20,13 +20,13 @@ from datetime import datetime, timezone, timedelta
 class StreamingPlatform:
    def __init__(self,name:str):
       #assigns all attributes
-        self._name=name
-        self._catalogue={}
-        self._users={}
-        self._artists={}
-        self._albums={}
-        self._playlists={}
-        self._sessions=[]
+      self._name=name
+      self._catalogue={}
+      self._users={}
+      self._artists={}
+      self._albums={}
+      self._playlists={}
+      self._sessions=[]
     
    def add_track(self,track):
       #adds track  
@@ -133,14 +133,14 @@ class StreamingPlatform:
    def total_listening_time_underage_sub_users_minutes(self, age: int = 18):
       total_seconds = 0
       for session in self._sessions:                          #loops throughs sessions
-        if isinstance(session.user, FamilyMember) and session.user.age < age: #checjs if user is family member and underage
+         if isinstance(session.user, FamilyMember) and session.user.age < age: #checjs if user is family member and underage
             total_seconds += session.duration_listened_seconds #adds listened seconds to total_seconds
       return total_seconds / 60  #returns in minutes
    
    def top_artists_by_listening_time(self,n: int = 5):
       artist_time = {}                                      #create dic for all artists
       for session in self._sessions:                        
-        if isinstance(session.track, Song):                 #checks if the track is a song and nothing different
+         if isinstance(session.track, Song):                 #checks if the track is a song and nothing different
             artist = session.artist                         #declares the artist of the session
             artist_time[artist] = artist_time.get(artist) + session.duration_listened_seconds #adds the listened time of the session to the listened time of the artist in the dic
       sorted_artists = sorted(artist_time.items(), key=lambda x: x[1], reverse=True) #sorts the artists, so that the highest listened to is first
@@ -166,18 +166,18 @@ class StreamingPlatform:
       return result
    
    def collaborative_playlists_with_many_artists(self, threshold: int = 3):
-    result = []
-    for playlist in self._playlists.values():               #loops through all playlists
-        if not isinstance(playlist, CollaborativePlaylist): #checks if its a CollaborativePlaylist
-            continue
-        artist_ids = {                                      #makes with a loop a set of artist ids
-            track.artist.artist_id                          #takes the trackid of the song
-            for track in playlist.tracks
-            if isinstance(track, Song)                      #takes only tracks with attribute song
-        }
-        if len(artist_ids) > threshold:                     #if the playlist has more than 3 artists, then it gets added to the result
-            result.append(playlist)
-    return result
+      result = []
+      for playlist in self._playlists.values():               #loops through all playlists
+         if not isinstance(playlist, CollaborativePlaylist): #checks if its a CollaborativePlaylist
+               continue
+         artist_ids = {                                      #makes with a loop a set of artist ids
+               track.artist.artist_id                          #takes the trackid of the song
+               for track in playlist.tracks
+               if isinstance(track, Song)                      #takes only tracks with attribute song
+         }
+         if len(artist_ids) > threshold:                     #if the playlist has more than 3 artists, then it gets added to the result
+               result.append(playlist)
+      return result
    
    def avg_tracks_per_playlist_type(self):
       data = {}                                             #dic for later
@@ -186,17 +186,17 @@ class StreamingPlatform:
       collab_count = 0
       collab_tracks = 0
       for playlist in self._playlists.values():             #loops through playlist
-        if isinstance(playlist, CollaborativePlaylist):     #checks if its CollaborativePlaylist else its a normal playlist
+         if isinstance(playlist, CollaborativePlaylist):     #checks if its CollaborativePlaylist else its a normal playlist
             collab_count += 1
             collab_tracks += len(playlist.tracks)           #length of tracks added for the avarage later
-        else:
+         else:
             playlist_count += 1
             playlist_tracks += len(playlist.tracks)
       data["Playlist"] = (
-        playlist_tracks / playlist_count if playlist_count > 0 else 0.0 #makes the average or else makes the average 0.0
+         playlist_tracks / playlist_count if playlist_count > 0 else 0.0 #makes the average or else makes the average 0.0
       ) 
       data["CollaborativePlaylist"] = (
-        collab_tracks / collab_count if collab_count > 0 else 0.0
+         collab_tracks / collab_count if collab_count > 0 else 0.0
       )
       return data
 
@@ -210,7 +210,7 @@ class StreamingPlatform:
          for album in self._albums.values(): #loops through all of the albums
             album_tracks=set()               #empty set
             if not album_tracks:             #checks, if there is even album
-             continue
+               continue
             if hasattr(album,'track_ids'):   #checks if the album has track_ids
                album_tracks.add(album.track_ids)   #adds the track_id of the album to the set
             else:
